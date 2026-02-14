@@ -1,7 +1,7 @@
 const { model } = require("mongoose");
 const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
-
+const bcrypt= require("bcryptjs")
 
 
 async function registerUser(req, res) {
@@ -12,13 +12,14 @@ async function registerUser(req, res) {
   });
 
   if (isUserAlreadyExist) {
-    return res.status(401).json({ message: "User already exist" });
+    return res.status(409).json({ message: "User already exist" });
   }
+  const hash=await bcrypt.hash(password,10)
 
   const user = await userModel.create({
     username,
     email,
-    password,
+    password:hash,
     role,
   });
 
@@ -27,7 +28,7 @@ async function registerUser(req, res) {
       id: user._id,
       role: user.role,
     },
-    process.env.JWT_SECRETE,
+    process.env.JWT_SECRET,
   );
 
   res.cookie("token", token);
@@ -42,3 +43,5 @@ async function registerUser(req, res) {
     },
   });
 }
+
+module.exports= {registerUser}  
