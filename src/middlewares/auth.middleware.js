@@ -11,7 +11,7 @@ async function authArtist(req, res, next) {
         if (decode.role !== "artist") {
            return res.status(403).json({ message: "you dont have access"})
         }
-
+        req.user=decode
         next()
     }
 
@@ -23,4 +23,4 @@ async function authArtist(req, res, next) {
     }
 }
 
-module.exports=authArtist
+module.exports={authArtist}
