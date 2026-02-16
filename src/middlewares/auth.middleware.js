@@ -9,9 +9,9 @@ async function authArtist(req, res, next) {
     try {
         const decode = jwt.verify(token, process.env.JWT_SECRET)
         if (decode.role !== "artist") {
-           return res.status(403).json({ message: "you dont have access"})
+            return res.status(403).json({ message: "you dont have access" })
         }
-        req.user=decode
+        req.user = decode
         next()
     }
 
@@ -23,4 +23,23 @@ async function authArtist(req, res, next) {
     }
 }
 
-module.exports={authArtist}
+async function authUser(req, res, next) {
+    const token = req.cookies.token
+    if (!token) {
+        return res.status(401).json({ message: "unauthorize" })
+    }
+    try {
+        const decode=jwt.verify(token,process.env.JWT_SECRET)
+        if (decode.role !== "user")
+
+            
+            return res.status(401).json({ message: "you dont have access to music" })
+    }
+
+    catch (err) {
+        return res.status(401).json({ message: "unauthorize" })
+    }
+
+    next()
+}
+module.exports = { authArtist,authUser }
