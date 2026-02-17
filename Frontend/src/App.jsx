@@ -1,9 +1,13 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
+import { ApiDataContext } from './context/ContextApi'
+import Login from './pages/Login';
 const App = () => {
+  const data=useContext(ApiDataContext)
+  console.log(data);
+  
   return (
     <div>
-      frontend
+      <Login/>
     </div>
   )
 }
