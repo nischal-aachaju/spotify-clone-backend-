@@ -30,9 +30,8 @@ async function authUser(req, res, next) {
     }
     try {
         const decode=jwt.verify(token,process.env.JWT_SECRET)
-        if (decode.role !== "user")
+        if (decode.role !== "user" && decode.role!=="artist")
 
-            
             return res.status(401).json({ message: "you dont have access to music" })
     }
 
