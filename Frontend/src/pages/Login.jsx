@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -25,19 +28,15 @@ const Login = () => {
       const response = await axios.post(
         "http://localhost:3000/api/auth/login",
         formData,
-        { withCredentials: true } // important if using cookies (JWT)
+        { withCredentials: true }
       );
 
       setMessage("Login successful ✅");
-      console.log(response.data);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
 
-      // Reset form
-      setFormData({
-        username: "",
-        email: "",
-        role: "user",
-        password: "",
-      });
+      navigate("/");
 
     } catch (error) {
       setMessage("Login failed ❌");
@@ -60,7 +59,7 @@ const Login = () => {
           value={formData.username}
           onChange={handleChange}
           className="w-full mb-3 p-2 border"
-          
+
         />
 
         <input
@@ -70,7 +69,7 @@ const Login = () => {
           value={formData.email}
           onChange={handleChange}
           className="w-full mb-3 p-2 border"
-          
+
         />
 
         <select
