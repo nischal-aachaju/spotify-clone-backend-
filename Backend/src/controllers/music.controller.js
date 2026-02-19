@@ -51,7 +51,6 @@ async function getAllMusic(req,res) {
   const music=await musicModel
   .find()
   .skip(0)
-  .limit(5)
   .populate("artist","username" )
   res.status(200).json({
     message:"all musics",
@@ -71,7 +70,7 @@ async function getAlbum(req,res){
 
 async function getAlbumById(req,res){
   const AlbumId =req.params.id
-  const album =await albumModel.findById(AlbumId).populate("artist","username")
+  const album =await albumModel.findById(AlbumId).populate("artist","username").populate("musics", "title uri")
   res.status(200).json({
     music:album
   })

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ApiDataContext } from './context/ContextApi'
 import Login from './pages/Login';
 import HomePage from './pages/HomePage';
+import Artist from './pages/Artist';
 const App = () => {
   
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/artist" element={<Artist /> } />
       </Routes>
     </BrowserRouter>
   )
